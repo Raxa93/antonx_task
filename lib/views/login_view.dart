@@ -4,8 +4,10 @@ import 'package:antonx_task/constants/app_style.dart';
 import 'package:antonx_task/controller/login_controller.dart';
 import 'package:antonx_task/custom_widgets/custom_button.dart';
 import 'package:antonx_task/custom_widgets/custom_textfield.dart';
+import 'package:antonx_task/utilities/general_utilities.dart';
 import 'package:antonx_task/views/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -52,41 +54,33 @@ class _LogInScreenState extends State<LogInScreen> {
               height: SizeConfig.screenHeight! * 0.6,
               width: SizeConfig.screenWidth! * 0.84,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: SizeConfig.screenHeight! * 0.04,
-                  ),
+                  // SizedBox(
+                  //   height: SizeConfig.screenHeight! * 0.04,
+                  // ),
                   Text(
                     "Sign in to EduGIGs",
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold, fontSize: SizeConfig.screenHeight! * 0.025),
                   ),
-                  SizedBox(
-                    height: SizeConfig.screenHeight! * 0.01,
-                  ),
+
                   CustomWidget.customsTextField(
                       'Email Address', 'Email Address', null, Icons.mail, emailController, false),
-                  SizedBox(
-                    height: SizeConfig.screenHeight! * 0.01,
-                  ),
+
                   CustomWidget.customsTextField(
                       'Password', 'Password', null, Icons.visibility, passwordController, false),
-                  SizedBox(
-                    height: SizeConfig.screenHeight! * 0.03,
-                  ),
+
                   const Padding(
                     padding: EdgeInsets.only(left: 150),
                     child: Text("Forget password?", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
                   ),
-                  SizedBox(
-                    height: SizeConfig.screenHeight! * 0.03,
-                  ),
+
                   InkWell(
                     onTap: () {},
                     child: InkWell(
                       onTap: () async {
-                        print('Loggin in');
                         if (emailController.text.isEmpty) {
                           Fluttertoast.showToast(msg: 'Email must not be empty!');
                         } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -94,11 +88,18 @@ class _LogInScreenState extends State<LogInScreen> {
                           Fluttertoast.showToast(msg: 'Please Enter valid Email');
                         } else if (passwordController.text.isEmpty) {
                           Fluttertoast.showToast(msg: 'Password must not be empty!');
-                        } else {
-                          await loginVm.loginWithCredentials(context,emailController.text, passwordController.text, 'seller').then((value) {
-                            if(value!= null){
-                              Navigator.of(context)
-                                  .pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
+                        } else if (GeneralUtilities.checkInternetConnection() == null) {
+                          Fluttertoast.showToast(msg: 'Please check internet connection');
+                        }
+                        else {
+                          EasyLoading.show();
+                          await loginVm
+                              .loginWithCredentials(context, emailController.text, passwordController.text, 'seller')
+                              .then((value) {
+                                EasyLoading.dismiss();
+                            if (value != null) {
+
+                               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>  HomeScreen()));
                             }
                           });
                         }
@@ -110,7 +111,7 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 60, top: 20),
+              padding: EdgeInsets.only(left: SizeConfig.screenWidth! * 0.12, top: SizeConfig.screenHeight! * 0.03),
               child: Row(
                 children: [
                   Text("Do you have account?",

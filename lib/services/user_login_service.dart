@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:antonx_task/constants/app-strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -14,7 +15,7 @@ class AuthService {
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         Map<String, dynamic> responseMap = jsonDecode(response.body);
-        print('This is body in service ${responseMap}');
+        // log('This is body in service ${responseMap}');
         return responseMap;
 
 

@@ -2,7 +2,7 @@
 class AllPostModel {
   bool? success;
   String? error;
-  List<Body>? body;
+  List<AllPostBody>? body;
 
   AllPostModel({this.success, this.error, this.body});
 
@@ -10,9 +10,9 @@ class AllPostModel {
     success = json['success'];
     error = json['error'];
     if (json['body'] != null) {
-      body = <Body>[];
+      body = <AllPostBody>[];
       json['body'].forEach((v) {
-        body!.add(Body.fromJson(v));
+        body!.add(AllPostBody.fromJson(v));
       });
     }
   }
@@ -28,7 +28,7 @@ class AllPostModel {
   }
 }
 
-class Body {
+class AllPostBody {
   int? userId;
   String? firstName;
   String? lastName;
@@ -56,7 +56,7 @@ class Body {
   String? createdAt;
   String? updatedAt;
 
-  Body(
+  AllPostBody(
       {this.userId,
         this.firstName,
         this.lastName,
@@ -84,7 +84,7 @@ class Body {
         this.createdAt,
         this.updatedAt});
 
-  Body.fromJson(Map<String, dynamic> json) {
+  AllPostBody.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     firstName = json['first_name'];
     lastName = json['last_name'];

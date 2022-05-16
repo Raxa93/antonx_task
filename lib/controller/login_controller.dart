@@ -8,11 +8,10 @@ import 'package:flutter/cupertino.dart';
 class LogInController extends ChangeNotifier {
   Future<User?> loginWithCredentials(BuildContext context,String userEmail, String password, String userType) async {
     Map<String, dynamic>? response = await AuthService.login(userEmail, password, userType);
-
     if (response!['success'] == true) {
       var user = User.fromJson(response);
-      log('This is user ${user.name}');
-      log('This is response ${response['body']['access_token']}');
+       // log('This is user in controller ${user.name}');
+       log('This is response ${response['body']['access_token']}');
       return user;
     } else {
       GeneralUtilities().showMessage(context: context, title: 'Something went wrong', text: response['error']);
