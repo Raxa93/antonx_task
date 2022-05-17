@@ -6,12 +6,13 @@ import 'package:antonx_task/constants/app-strings.dart';
 import 'package:http/http.dart' as http;
 
 class PostService {
-  static Future<Map<String, dynamic>?> getAllPostFromApi() async {
+  static Future<Map<String, dynamic>?> getAllPostFromApi(String accessToken) async {
+    print('Here is token: $accessToken');
     try {
       final response = await http.get(
         Uri.parse(AppString.allPostApiBaseUrl),
         headers: {
-          'Authorization': 'Bearer 269|Vs9VyAZfHfOuY9AJbuC7gaoQMAPmx7XlqUlDWn9b',
+          'Authorization': 'Bearer ${accessToken.toString()}',
         },
       );
       if (response.statusCode == 200) {

@@ -32,8 +32,4 @@ class GeneralUtilities{
     }
   }
 
-  final spinkit = SpinKitRotatingCircle(
-    color: Colors.white,
-    size: 50.0,
-  );
 }

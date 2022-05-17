@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:antonx_task/configurations/size_config.dart';
 import 'package:antonx_task/constants/app_colors.dart';
 import 'package:antonx_task/constants/app_style.dart';
@@ -20,8 +22,8 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
-  TextEditingController emailController = TextEditingController(text: 'owaismabood@gmail.com');
-  TextEditingController passwordController = TextEditingController(text: '12345678');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           Fluttertoast.showToast(msg: 'Please Enter valid Email');
                         } else if (passwordController.text.isEmpty) {
                           Fluttertoast.showToast(msg: 'Password must not be empty!');
-                        } else if (GeneralUtilities.checkInternetConnection() == null) {
+                        } else if (await GeneralUtilities.checkInternetConnection() == null) {
                           Fluttertoast.showToast(msg: 'Please check internet connection');
                         }
                         else {
@@ -98,8 +100,8 @@ class _LogInScreenState extends State<LogInScreen> {
                               .then((value) {
                                 EasyLoading.dismiss();
                             if (value != null) {
-
-                               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>  HomeScreen()));
+                              print('This is value in view ${value.name}');
+                               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>   HomeScreen(user: value)));
                             }
                           });
                         }

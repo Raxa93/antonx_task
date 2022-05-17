@@ -8,6 +8,7 @@ class AppColors {
   static Color kPrimaryBlue = const Color.fromRGBO(129, 93, 255, 1);
   static Color containerColor = const Color(0xff427DAA);
 
+  static Color kAvatarDarkGrey = const Color(0xFF5E5E5E);
 
 
 }
